@@ -1,5 +1,5 @@
 # 💫 About Me:
-📚 I’m currently studying at Sparachinee Trang School<br>👯 I’m looking to collaborate with Anyone who can accept me<br>🌱 I’m currently learning Full-stack development and microcontrollers <br>📖 I'm Grade 10<br>
+📚 I’m currently studying at Sparachinee Trang School<br>👯 I’m looking to collaborate with Anyone who can accept me<br>🌱 I’m currently learning Full-stack development and microcontrollers <br>📖 I'm Grade 11<br>
 
 
 ## 🌐 Socials:
