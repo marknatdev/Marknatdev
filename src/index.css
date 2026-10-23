@@ -2,38 +2,455 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    background-color: #07090e;
-    color: #f1f5f9;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+/*-----------------------------------*\
+  #vCard Custom Properties (@codewithsadee)
+\*-----------------------------------*/
+
+:root {
+  --bg-gradient-onyx: linear-gradient(
+    to bottom right,
+    hsl(240, 1%, 25%) 3%,
+    hsl(0, 0%, 19%) 97%
+  );
+  --bg-gradient-jet: linear-gradient(
+      to bottom right,
+      hsla(240, 1%, 18%, 0.251) 0%,
+      hsla(240, 2%, 11%, 0) 100%
+    ),
+    hsl(240, 2%, 13%);
+  --bg-gradient-yellow-1: linear-gradient(
+    to bottom right,
+    hsl(45, 100%, 71%) 0%,
+    hsla(36, 100%, 69%, 0) 50%
+  );
+  --bg-gradient-yellow-2: linear-gradient(
+      135deg,
+      hsla(45, 100%, 71%, 0.251) 0%,
+      hsla(35, 100%, 68%, 0) 59.86%
+    ),
+    hsl(240, 2%, 13%);
+  --border-gradient-onyx: linear-gradient(
+    to bottom right,
+    hsl(0, 0%, 25%) 0%,
+    hsla(0, 0%, 25%, 0) 50%
+  );
+  --text-gradient-yellow: linear-gradient(
+    to right,
+    hsl(45, 100%, 72%),
+    hsl(35, 100%, 68%)
+  );
+
+  --jet: hsl(0, 0%, 22%);
+  --onyx: hsl(240, 1%, 17%);
+  --eerie-black-1: hsl(240, 2%, 13%);
+  --eerie-black-2: hsl(240, 2%, 12%);
+  --smoky-black: hsl(0, 0%, 7%);
+  --white-1: hsl(0, 0%, 100%);
+  --white-2: hsl(0, 0%, 98%);
+  --orange-yellow-crayola: hsl(45, 100%, 72%);
+  --vegas-gold: hsl(45, 54%, 58%);
+  --light-gray: hsl(0, 0%, 84%);
+  --light-gray-70: hsla(0, 0%, 84%, 0.7);
+  --bittersweet-shimmer: hsl(0, 43%, 51%);
+
+  --ff-poppins: 'Poppins', 'Noto Sans Thai', sans-serif;
+
+  --fs-1: 24px;
+  --fs-2: 18px;
+  --fs-3: 17px;
+  --fs-4: 16px;
+  --fs-5: 15px;
+  --fs-6: 14px;
+  --fs-7: 13px;
+  --fs-8: 11px;
+
+  --fw-300: 300;
+  --fw-400: 400;
+  --fw-500: 500;
+  --fw-600: 600;
+
+  --shadow-1: -4px 8px 24px hsla(0, 0%, 0%, 0.25);
+  --shadow-2: 0 16px 30px hsla(0, 0%, 0%, 0.25);
+  --shadow-3: 0 16px 40px hsla(0, 0%, 0%, 0.25);
+  --shadow-4: 0 25px 50px hsla(0, 0%, 0%, 0.15);
+  --shadow-5: 0 24px 80px hsla(0, 0%, 0%, 0.25);
+
+  --transition-1: 0.25s ease;
+  --transition-2: 0.5s ease-in-out;
+}
+
+::selection {
+  background: var(--orange-yellow-crayola);
+  color: var(--smoky-black);
+}
+
+html {
+  font-family: var(--ff-poppins);
+}
+
+body {
+  background: var(--smoky-black);
+  color: var(--light-gray);
+  margin: 0;
+  padding: 0;
+}
+
+/*-----------------------------------*\
+  #REUSED VCARD STYLES
+\*-----------------------------------*/
+
+.vcard-sidebar,
+.vcard-article {
+  background: var(--eerie-black-2);
+  border: 1px solid var(--jet);
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: var(--shadow-1);
+  z-index: 1;
+}
+
+.vcard-separator {
+  width: 100%;
+  height: 1px;
+  background: var(--jet);
+  margin: 16px 0;
+}
+
+.vcard-icon-box {
+  position: relative;
+  background: var(--border-gradient-onyx);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: var(--orange-yellow-crayola);
+  box-shadow: var(--shadow-1);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.vcard-icon-box::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--eerie-black-1);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.vcard-article {
+  animation: vcardFade 0.45s ease backwards;
+}
+
+@keyframes vcardFade {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Subtle engineering blueprint background grid */
-.bg-engineering-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(30, 41, 59, 0.35) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(30, 41, 59, 0.35) 1px, transparent 1px);
+.vcard-article-title {
+  position: relative;
+  padding-bottom: 7px;
+  margin-bottom: 24px;
+  color: var(--white-2);
+  font-size: var(--fs-1);
+  font-weight: var(--fw-600);
 }
 
-.bg-radial-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.14) 0%, rgba(59, 130, 246, 0.06) 35%, transparent 70%);
+.vcard-article-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  height: 3px;
+  background: var(--text-gradient-yellow);
+  border-radius: 3px;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+.vcard-content-card {
+  position: relative;
+  background: var(--border-gradient-onyx);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-2);
+  z-index: 1;
+}
+
+.vcard-content-card::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-gradient-jet);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.vcard-service-item {
+  position: relative;
+  background: var(--border-gradient-onyx);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-2);
+  z-index: 1;
+  transition: transform var(--transition-1);
+}
+
+.vcard-service-item:hover {
+  transform: translateY(-2px);
+}
+
+.vcard-service-item::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-gradient-jet);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.vcard-btn {
+  position: relative;
+  background: var(--border-gradient-onyx);
+  color: var(--orange-yellow-crayola);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 12px;
+  font-size: var(--fs-6);
+  font-weight: var(--fw-500);
+  box-shadow: var(--shadow-2);
+  z-index: 1;
+  transition: var(--transition-1);
+  cursor: pointer;
+}
+
+.vcard-btn::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-gradient-jet);
+  border-radius: inherit;
+  z-index: -1;
+  transition: var(--transition-1);
+}
+
+.vcard-btn:hover {
+  background: var(--bg-gradient-yellow-1);
+}
+
+.vcard-btn:hover::before {
+  background: var(--bg-gradient-yellow-2);
+}
+
+.vcard-info-more-btn {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  border-radius: 0 15px;
+  font-size: 12px;
+  color: var(--orange-yellow-crayola);
+  background: var(--border-gradient-onyx);
+  padding: 10px 14px;
+  box-shadow: var(--shadow-2);
+  transition: var(--transition-1);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vcard-info-more-btn::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: var(--bg-gradient-jet);
+  transition: var(--transition-1);
+  z-index: -1;
+}
+
+.vcard-info-more-btn:hover {
+  background: var(--bg-gradient-yellow-1);
+}
+
+.vcard-info-more-btn:hover::before {
+  background: var(--bg-gradient-yellow-2);
+}
+
+/* Timeline */
+.vcard-timeline-list {
+  font-size: var(--fs-6);
+  margin-left: 45px;
+}
+
+.vcard-timeline-item {
+  position: relative;
+}
+
+.vcard-timeline-item:not(:last-child) {
+  margin-bottom: 22px;
+}
+
+.vcard-timeline-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: -25px;
+  left: -30px;
+  width: 1px;
+  height: calc(100% + 50px);
+  background: var(--jet);
+}
+
+.vcard-timeline-item::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: -33px;
+  height: 7px;
+  width: 7px;
+  background: var(--text-gradient-yellow);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px var(--jet);
+}
+
+/* Skill Progress Bar */
+.vcard-skill-progress-bg {
+  background: var(--jet);
+  width: 100%;
   height: 8px;
+  border-radius: 10px;
+  overflow: hidden;
 }
-::-webkit-scrollbar-track {
-  background: #07090e;
+
+.vcard-skill-progress-fill {
+  background: var(--text-gradient-yellow);
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.6s ease;
 }
-::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
+
+/* Navbar */
+.vcard-navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: hsla(240, 1%, 17%, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--jet);
+  border-radius: 14px 14px 0 0;
+  box-shadow: var(--shadow-2);
+  z-index: 30;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+
+/* Responsive Breakpoints matching @codewithsadee/vcard-personal-portfolio */
+@media (min-width: 580px) {
+  :root {
+    --fs-1: 32px;
+    --fs-2: 24px;
+    --fs-3: 26px;
+    --fs-4: 18px;
+    --fs-6: 15px;
+    --fs-7: 15px;
+    --fs-8: 12px;
+  }
+
+  .vcard-sidebar,
+  .vcard-article {
+    padding: 30px;
+  }
+
+  .vcard-article-title {
+    padding-bottom: 15px;
+  }
+
+  .vcard-article-title::after {
+    width: 40px;
+    height: 5px;
+  }
+
+  .vcard-icon-box {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    font-size: 18px;
+  }
+
+  .vcard-info-more-btn {
+    top: -30px;
+    right: -30px;
+    padding: 10px 15px;
+  }
+
+  .vcard-timeline-list {
+    margin-left: 65px;
+  }
+
+  .vcard-timeline-item:not(:last-child)::before {
+    left: -40px;
+  }
+
+  .vcard-timeline-item::after {
+    height: 8px;
+    width: 8px;
+    left: -43px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vcard-navbar {
+    position: absolute;
+    bottom: auto;
+    top: 0;
+    left: auto;
+    right: 0;
+    width: max-content;
+    border-radius: 0 20px;
+    padding: 0 20px;
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 1250px) {
+  .vcard-main {
+    max-width: 1200px;
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 25px;
+  }
+
+  .vcard-main-content {
+    min-width: 75%;
+    width: 75%;
+    margin: 0;
+    position: relative;
+  }
+
+  .vcard-sidebar {
+    position: sticky;
+    top: 60px;
+    max-height: max-content;
+    height: 100%;
+    margin-bottom: 0;
+    padding-top: 50px;
+    width: 280px;
+    flex-shrink: 0;
+  }
+
+  .vcard-info-more-btn {
+    display: none;
+  }
 }

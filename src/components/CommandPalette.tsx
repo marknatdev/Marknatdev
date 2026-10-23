@@ -3,32 +3,38 @@ import {
   Search,
   X,
   Cpu,
-  TrendingUp,
   Globe,
   Mail,
   Github,
-  Terminal,
-  GraduationCap,
+  Briefcase,
+  User,
+  FolderGit2,
   ExternalLink,
 } from 'lucide-react';
 import { Language, PROFILE_LINKS } from '../data/portfolioData';
+
+export type VCardPage = 'about' | 'resume' | 'portfolio' | 'lab' | 'contact';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   lang: Language;
   onToggleLang: (next: Language) => void;
+  onSelectPage: (page: VCardPage) => void;
 }
 
-export const CommandPalette: React.FC<Props> = ({ isOpen, onClose, lang, onToggleLang }) => {
+export const CommandPalette: React.FC<Props> = ({
+  isOpen,
+  onClose,
+  lang,
+  onToggleLang,
+  onSelectPage,
+}) => {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        if (isOpen) onClose();
-      } else if (e.key === 'Escape' && isOpen) {
+      if (e.key === 'Escape' && isOpen) {
         onClose();
       }
     };
@@ -40,42 +46,55 @@ export const CommandPalette: React.FC<Props> = ({ isOpen, onClose, lang, onToggl
 
   const actions = [
     {
-      id: 'helix',
-      title: lang === 'en' ? 'Jump to Flagship #1: HELIX Smart Helmet LoRa' : 'ไปยังผลงาน #1: หมวกกันน็อกอัจฉริยะ HELIX LoRa',
-      category: 'Flagship Systems',
+      id: 'about',
+      title: lang === 'en' ? 'Open Tab: About Me & Flagships' : 'เปิดแท็บ: เกี่ยวกับฉันและผลงานหลัก',
+      category: 'vCard Pages',
+      icon: User,
+      run: () => {
+        onSelectPage('about');
+        onClose();
+      },
+    },
+    {
+      id: 'resume',
+      title: lang === 'en' ? 'Open Tab: Resume, Education (TCAS) & Skills' : 'เปิดแท็บ: ประวัติการศึกษา (TCAS) และทักษะ',
+      category: 'vCard Pages',
+      icon: Briefcase,
+      run: () => {
+        onSelectPage('resume');
+        onClose();
+      },
+    },
+    {
+      id: 'portfolio',
+      title: lang === 'en' ? 'Open Tab: Portfolio Projects Grid' : 'เปิดแท็บ: รวมโปรเจกต์ทั้งหมด',
+      category: 'vCard Pages',
+      icon: FolderGit2,
+      run: () => {
+        onSelectPage('portfolio');
+        onClose();
+      },
+    },
+    {
+      id: 'lab',
+      title:
+        lang === 'en'
+          ? 'Open Tab: Interactive Lab (HELIX LoRa & FXCommand Simulators)'
+          : 'เปิดแท็บ: ห้องแล็บจำลองระบบ HELIX LoRa & FXCommand',
+      category: 'Interactive Simulators',
       icon: Cpu,
       run: () => {
-        document.getElementById('flagship-helix')?.scrollIntoView({ behavior: 'smooth' });
+        onSelectPage('lab');
         onClose();
       },
     },
     {
-      id: 'fxcommand',
-      title: lang === 'en' ? 'Jump to Flagship #2: FXCommand Trading Engine' : 'ไปยังผลงาน #2: ระบบเทรดอัตโนมัติ FXCommand',
-      category: 'Flagship Systems',
-      icon: TrendingUp,
+      id: 'contact',
+      title: lang === 'en' ? 'Open Tab: Contact & Trang Map' : 'เปิดแท็บ: ติดต่อและแผนที่ จ.ตรัง',
+      category: 'vCard Pages',
+      icon: Mail,
       run: () => {
-        document.getElementById('flagship-fxcommand')?.scrollIntoView({ behavior: 'smooth' });
-        onClose();
-      },
-    },
-    {
-      id: 'bento',
-      title: lang === 'en' ? 'View Academic & TCAS Engineering Profile' : 'ดูข้อมูลการศึกษา โรงเรียนสภาราชินี จังหวัดตรัง (TCAS)',
-      category: 'Navigation',
-      icon: GraduationCap,
-      run: () => {
-        document.getElementById('bento-overview')?.scrollIntoView({ behavior: 'smooth' });
-        onClose();
-      },
-    },
-    {
-      id: 'terminal',
-      title: lang === 'en' ? 'Open Interactive CLI Terminal' : 'ไปที่เทอร์มินัลโต้ตอบ (CLI Terminal)',
-      category: 'Navigation',
-      icon: Terminal,
-      run: () => {
-        document.getElementById('terminal-section')?.scrollIntoView({ behavior: 'smooth' });
+        onSelectPage('contact');
         onClose();
       },
     },
@@ -89,16 +108,6 @@ export const CommandPalette: React.FC<Props> = ({ isOpen, onClose, lang, onToggl
       icon: Globe,
       run: () => {
         onToggleLang(lang === 'en' ? 'th' : 'en');
-        onClose();
-      },
-    },
-    {
-      id: 'copy-email',
-      title: `Copy Email (${PROFILE_LINKS.email})`,
-      category: 'Contact',
-      icon: Mail,
-      run: () => {
-        navigator.clipboard?.writeText(PROFILE_LINKS.email);
         onClose();
       },
     },
@@ -121,10 +130,10 @@ export const CommandPalette: React.FC<Props> = ({ isOpen, onClose, lang, onToggl
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-slate-950/80 backdrop-blur-sm">
-      <div className="w-full max-w-xl rounded-2xl border border-slate-700/80 bg-[#0C101A] shadow-2xl overflow-hidden">
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-800">
-          <Search className="w-4 h-4 text-cyan-400" />
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/80 backdrop-blur-sm">
+      <div className="w-full max-w-xl rounded-[20px] border border-[#383838] bg-[#1e1e1f] shadow-2xl overflow-hidden">
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[#383838]">
+          <Search className="w-4 h-4 text-[#ffdb70]" />
           <input
             type="text"
             autoFocus
@@ -132,48 +141,43 @@ export const CommandPalette: React.FC<Props> = ({ isOpen, onClose, lang, onToggl
             onChange={(e) => setQuery(e.target.value)}
             placeholder={
               lang === 'en'
-                ? 'Type a command or search sections (HELIX, FXCommand, Thai, Email)...'
-                : 'ค้นหาส่วนต่างๆ หรือคำสั่งลัด (HELIX, FXCommand, เปลี่ยนภาษา, อีเมล)...'
+                ? 'Search vCard tabs or commands (About, Resume, Portfolio, Lab, Thai)...'
+                : 'ค้นหาหน้าต่างๆ หรือคำสั่งลัด (About, Resume, Portfolio, Lab)...'
             }
-            className="w-full bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none"
+            className="w-full bg-transparent text-sm text-[#fafafa] placeholder-[#d6d6d6]/50 focus:outline-none"
           />
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+            className="p-1 rounded-lg text-[#d6d6d6]/70 hover:text-white hover:bg-[#2b2b2c]"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="p-2 max-h-80 overflow-y-auto divide-y divide-slate-800/40">
+        <div className="p-2 max-h-80 overflow-y-auto divide-y divide-[#383838]/40">
           {filtered.map((item) => {
             const Icon = item.icon;
             return (
               <button
                 key={item.id}
                 onClick={item.run}
-                className="w-full flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl hover:bg-cyan-500/10 text-left transition group"
+                className="w-full flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl hover:bg-[#2b2b2c] text-left transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-cyan-400 group-hover:border-cyan-500/40">
+                  <div className="vcard-icon-box !w-9 !h-9">
                     <Icon className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="text-xs sm:text-sm font-medium text-slate-200 group-hover:text-cyan-200">
+                    <div className="text-xs sm:text-sm font-medium text-[#fafafa] group-hover:text-[#ffdb70]">
                       {item.title}
                     </div>
-                    <div className="text-[11px] font-mono text-slate-500">{item.category}</div>
+                    <div className="text-[11px] text-[#d6d6d6]/60">{item.category}</div>
                   </div>
                 </div>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400" />
+                <ExternalLink className="w-3.5 h-3.5 text-[#d6d6d6]/50 group-hover:text-[#ffdb70]" />
               </button>
             );
           })}
-          {filtered.length === 0 && (
-            <div className="py-8 text-center text-xs text-slate-500 font-mono">
-              No matching commands found.
-            </div>
-          )}
         </div>
       </div>
     </div>
