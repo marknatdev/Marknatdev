@@ -6,7 +6,7 @@
 ## 🚀 Live Interactive Portfolio Website
 [![Portfolio Website](https://img.shields.io/badge/🌐_Live_Portfolio-marknatdev.github.io-06B6D4?style=for-the-badge&logo=githubpages&logoColor=white)](https://marknatdev.github.io)
 
-> Achievements, selected projects and contact links, in **English / Thai**.
+> Achievements, selected projects and contact links, in **English / Thai**. Source: [marknatdev/marknatdev.github.io](https://github.com/marknatdev/marknatdev.github.io)
 
 ## 🏆 Achievements
 - **POSN Computer Olympiad Camp 1 — Selected** · POSN Foundation, Satree Phuket School (1–17 Oct 2026)
