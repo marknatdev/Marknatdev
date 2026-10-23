@@ -13,9 +13,6 @@ import {
   Award,
 } from 'lucide-react';
 import { Language, PROFILE_LINKS } from './data/portfolioData';
-import { HelixSimulator } from './components/HelixSimulator';
-import { FxCommandSimulator } from './components/FxCommandSimulator';
-import { TerminalWidget } from './components/TerminalWidget';
 import { CommandPalette } from './components/CommandPalette';
 
 interface WorkItem {
@@ -36,6 +33,8 @@ interface Achievement {
   organizer: { en: string; th: string };
   date: { en: string; th: string };
   detail: { en: string; th: string };
+  /** Photo in public/achievements/; a placeholder tile shows until it is added. */
+  image?: string;
   featured?: boolean;
 }
 
@@ -44,7 +43,6 @@ export function App() {
   const [cmdOpen, setCmdOpen] = useState<boolean>(false);
   const [localTime, setLocalTime] = useState<string>('--:--');
   const [copiedEmail, setCopiedEmail] = useState<boolean>(false);
-  const [activeLabTab, setActiveLabTab] = useState<'helix' | 'fxcommand' | 'terminal'>('helix');
 
   // Update Trang, Thailand clock (Asia/Bangkok)
   useEffect(() => {
@@ -95,7 +93,8 @@ export function App() {
       },
       year: '2026',
       disciplines: ['ESP32 + SX1276 LoRa', 'Embedded C++', 'Firebase Cloud', 'Flutter Fleet UI'],
-      href: '#lab',
+      href: 'https://github.com/marknatdev/helix',
+      external: true,
       previewType: 'helix',
     },
     {
@@ -107,7 +106,8 @@ export function App() {
       },
       year: '2026',
       disciplines: ['Quantitative Systems', 'Python & MT5', 'Walk-Forward ML', 'MCP Server'],
-      href: '#lab',
+      href: 'https://github.com/marknatdev/fxcommand',
+      external: true,
       previewType: 'fxcommand',
     },
     {
@@ -166,8 +166,25 @@ export function App() {
 
   const achievements: Achievement[] = [
     {
-      id: 'iot-nsw-2026',
+      id: 'posn-camp1',
       featured: true,
+      title: {
+        en: 'POSN Computer Olympiad Camp 1',
+        th: 'ค่าย 1 สอวน. คอมพิวเตอร์',
+      },
+      result: { en: 'Selected', th: 'ผ่านการคัดเลือก' },
+      organizer: {
+        en: 'POSN Foundation · Satree Phuket School',
+        th: 'มูลนิธิ สอวน. · โรงเรียนสตรีภูเก็ต',
+      },
+      date: { en: '1–17 Oct 2026', th: '1–17 ต.ค. 2569' },
+      detail: {
+        en: '17 days of training in mathematics and C/C++ programming.',
+        th: 'อบรมคณิตศาสตร์และการเขียนโปรแกรม C/C++ เป็นเวลา 17 วัน',
+      },
+    },
+    {
+      id: 'iot-nsw-2026',
       title: {
         en: 'IoT Invention & Innovation Contest',
         th: 'การประกวดสิ่งประดิษฐ์และนวัตกรรมด้าน IoT',
@@ -197,24 +214,28 @@ export function App() {
         th: 'ข้อเสนอโครงงานผ่านการพิจารณา ได้ไปพัฒนาโครงงานต่อในรอบถัดไป',
       },
     },
-    {
-      id: 'posn-camp1',
-      title: {
-        en: 'POSN Computer Olympiad Camp 1',
-        th: 'ค่าย 1 สอวน. คอมพิวเตอร์',
-      },
-      result: { en: 'Selected', th: 'ผ่านการคัดเลือก' },
-      organizer: {
-        en: 'POSN Foundation · Satree Phuket School',
-        th: 'มูลนิธิ สอวน. · โรงเรียนสตรีภูเก็ต',
-      },
-      date: { en: '1–17 Oct 2026', th: '1–17 ต.ค. 2569' },
-      detail: {
-        en: '17 days of training in mathematics and C/C++ programming.',
-        th: 'อบรมคณิตศาสตร์และการเขียนโปรแกรม C/C++ เป็นเวลา 17 วัน',
-      },
-    },
   ];
+
+  const renderAchievementPhoto = (a: Achievement, dark: boolean) =>
+    a.image ? (
+      <img
+        src={a.image}
+        alt={a.title[lang]}
+        loading="lazy"
+        className="h-full w-full object-cover"
+      />
+    ) : (
+      <div
+        className={`flex h-full w-full flex-col items-center justify-center gap-2 ${
+          dark ? 'bg-[#22262d] text-[#a1a4aa]' : 'bg-muted text-muted-foreground'
+        }`}
+      >
+        <Award className={`size-8 ${dark ? 'text-[#6b9bff]' : 'text-accent'}`} />
+        <span className="px-3 text-center font-mono text-[10px] tracking-wide uppercase">
+          {a.organizer[lang].split(' · ')[0]}
+        </span>
+      </div>
+    );
 
   const featuredAchievement = achievements.find((a) => a.featured);
   const otherAchievements = achievements.filter((a) => !a.featured);
@@ -462,11 +483,6 @@ export function App() {
                 </a>
               </li>
               <li>
-                <a href="#lab" className="transition-colors hover:text-accent">
-                  {lang === 'en' ? 'Interactive Lab' : 'จำลองระบบ'}
-                </a>
-              </li>
-              <li>
                 <a href="#about" className="transition-colors hover:text-accent">
                   {lang === 'en' ? 'About' : 'เกี่ยวกับผม'}
                 </a>
@@ -509,11 +525,6 @@ export function App() {
             <li>
               <a href="#work" className="transition-colors hover:text-accent">
                 {lang === 'en' ? 'Work' : 'ผลงาน'}
-              </a>
-            </li>
-            <li>
-              <a href="#lab" className="transition-colors hover:text-accent">
-                {lang === 'en' ? 'Lab' : 'จำลองระบบ'}
               </a>
             </li>
             <li>
@@ -604,16 +615,19 @@ export function App() {
 
           <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-6">
             {featuredAchievement && (
-              <article className="flex flex-col justify-between gap-10 rounded-sm bg-[#191c21] p-6 text-[#fafaf9] sm:p-8">
-                <div className="flex items-start justify-between gap-4 font-mono text-xs text-[#a1a4aa]">
-                  <span className="inline-flex items-center gap-2 uppercase tracking-wide">
-                    <Award className="size-4 text-[#6b9bff]" />
-                    {lang === 'en' ? 'Main award' : 'ผลงานหลัก'}
-                  </span>
-                  <span className="shrink-0">{featuredAchievement.date[lang]}</span>
+              <article className="flex flex-col overflow-hidden rounded-sm bg-[#191c21] text-[#fafaf9]">
+                <div className="aspect-[16/10] overflow-hidden">
+                  {renderAchievementPhoto(featuredAchievement, true)}
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 p-6 sm:p-8">
+                  <div className="flex items-start justify-between gap-4 font-mono text-xs text-[#a1a4aa]">
+                    <span className="inline-flex items-center gap-2 uppercase tracking-wide">
+                      <Award className="size-4 text-[#6b9bff]" />
+                      {lang === 'en' ? 'Main award' : 'ผลงานหลัก'}
+                    </span>
+                    <span className="shrink-0">{featuredAchievement.date[lang]}</span>
+                  </div>
                   <span className="w-fit rounded-sm bg-[#6b9bff] px-2 py-1 text-xs font-medium text-[#14161a]">
                     {featuredAchievement.result[lang]}
                   </span>
@@ -632,13 +646,16 @@ export function App() {
               {otherAchievements.map((a) => (
                 <li
                   key={a.id}
-                  className="grid grid-cols-[7.5rem_1fr] gap-4 border-t border-border py-5 sm:grid-cols-[9rem_1fr]"
+                  className="grid grid-cols-[7rem_1fr] gap-4 border-t border-border py-5 sm:grid-cols-[11rem_1fr] sm:gap-6"
                 >
-                  <span className="font-mono text-xs leading-6 text-muted-foreground">
-                    {a.date[lang]}
-                  </span>
+                  <div className="aspect-[4/3] overflow-hidden rounded-sm border border-border/80">
+                    {renderAchievementPhoto(a, false)}
+                  </div>
                   <span className="flex flex-col gap-1">
-                    <span className="text-xs font-medium text-accent">{a.result[lang]}</span>
+                    <span className="flex flex-wrap items-baseline justify-between gap-x-3">
+                      <span className="text-xs font-medium text-accent">{a.result[lang]}</span>
+                      <span className="font-mono text-xs text-muted-foreground">{a.date[lang]}</span>
+                    </span>
                     <span className="font-medium">{a.title[lang]}</span>
                     <span className="text-sm text-muted-foreground">{a.organizer[lang]}</span>
                     <span className="mt-1 leading-relaxed text-pretty text-muted-foreground">
@@ -675,10 +692,6 @@ export function App() {
                   href={item.href}
                   target={item.external ? '_blank' : undefined}
                   rel={item.external ? 'noreferrer' : undefined}
-                  onClick={() => {
-                    if (item.id === 'helix') setActiveLabTab('helix');
-                    if (item.id === 'fxcommand') setActiveLabTab('fxcommand');
-                  }}
                   className="group flex flex-col gap-4"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-muted border border-border/80">
@@ -716,75 +729,6 @@ export function App() {
               </li>
             ))}
           </ul>
-        </section>
-
-        {/* ==========================================
-            INTERACTIVE ENGINEERING LAB (#lab)
-        ========================================== */}
-        <section
-          id="lab"
-          aria-labelledby="lab-title"
-          className="mx-auto max-w-screen-2xl scroll-mt-24 px-5 py-16 md:px-8 md:py-24"
-        >
-          <div className="flex items-baseline justify-between border-t border-foreground pt-4">
-            <h2 id="lab-title" className="text-sm font-medium">
-              {lang === 'en'
-                ? 'Interactive engineering lab'
-                : 'ห้องแล็บจำลองสถาปัตยกรรม (Interactive Lab)'}
-            </h2>
-            <span className="font-mono text-xs text-muted-foreground">
-              HELIX 923MHz LoRa · FXCommand MT5 · CLI
-            </span>
-          </div>
-
-          <div className="mt-10 space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <p className="max-w-2xl text-lg sm:text-xl leading-snug text-pretty">
-                {lang === 'en'
-                  ? 'Explore live interactive simulations of my two flagship systems—or query my full engineering stack directly through the terminal.'
-                  : 'ทดลองส่งแพ็กเก็ตในระบบจำลองของ 2 โปรเจกต์เรือธง (HELIX 923MHz LoRa และ FXCommand MT5 Risk Gate) หรือสำรวจข้อมูลผ่านเทอร์มินัล'}
-              </p>
-
-              <div className="inline-flex rounded-sm bg-secondary p-1 self-start">
-                <button
-                  onClick={() => setActiveLabTab('helix')}
-                  className={`px-3.5 py-1.5 rounded-sm text-xs font-medium transition ${
-                    activeLabTab === 'helix'
-                      ? 'bg-card text-foreground shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  01 / HELIX LoRa Sim
-                </button>
-                <button
-                  onClick={() => setActiveLabTab('fxcommand')}
-                  className={`px-3.5 py-1.5 rounded-sm text-xs font-medium transition ${
-                    activeLabTab === 'fxcommand'
-                      ? 'bg-card text-foreground shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  02 / FXCommand Arena
-                </button>
-                <button
-                  onClick={() => setActiveLabTab('terminal')}
-                  className={`px-3.5 py-1.5 rounded-sm text-xs font-medium transition ${
-                    activeLabTab === 'terminal'
-                      ? 'bg-card text-foreground shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  03 / CLI Terminal
-                </button>
-              </div>
-            </div>
-
-            {activeLabTab === 'helix' && <HelixSimulator lang={lang} />}
-            {activeLabTab === 'fxcommand' && <FxCommandSimulator lang={lang} />}
-            {activeLabTab === 'terminal' && (
-              <TerminalWidget lang={lang} onToggleLang={setLang} />
-            )}
-          </div>
         </section>
 
         {/* ==========================================

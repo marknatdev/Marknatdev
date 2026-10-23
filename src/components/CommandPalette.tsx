@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Search,
   X,
-  Cpu,
   Globe,
   Mail,
   Github,
@@ -58,19 +57,6 @@ export const CommandPalette: React.FC<Props> = ({
       icon: FolderGit2,
       run: () => {
         document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-        onClose();
-      },
-    },
-    {
-      id: 'lab',
-      title:
-        lang === 'en'
-          ? 'Jump to Interactive Engineering Lab (HELIX LoRa & FXCommand)'
-          : 'ไปยังห้องแล็บจำลองระบบ HELIX LoRa & FXCommand',
-      category: 'Simulators',
-      icon: Cpu,
-      run: () => {
-        document.getElementById('lab')?.scrollIntoView({ behavior: 'smooth' });
         onClose();
       },
     },
@@ -143,8 +129,8 @@ export const CommandPalette: React.FC<Props> = ({
             onChange={(e) => setQuery(e.target.value)}
             placeholder={
               lang === 'en'
-                ? 'Jump to section or switch language (Work, Lab, About, Thai)...'
-                : 'ค้นหาส่วนต่างๆ หรือเปลี่ยนภาษา (Work, Lab, About)...'
+                ? 'Jump to section or switch language (Achievements, Work, About, Thai)...'
+                : 'ค้นหาส่วนต่างๆ หรือเปลี่ยนภาษา (Achievements, Work, About)...'
             }
             className="w-full bg-transparent text-sm text-foreground placeholder-muted-foreground focus:outline-none"
           />
