@@ -452,13 +452,13 @@ export function App() {
           <nav aria-label="Primary" className="col-span-2 hidden md:block">
             <ul className="flex gap-6 text-sm">
               <li>
-                <a href="#work" className="transition-colors hover:text-accent">
-                  {lang === 'en' ? 'Work' : 'ผลงาน'}
+                <a href="#achievements" className="transition-colors hover:text-accent">
+                  {lang === 'en' ? 'Achievements' : 'ผลงานและรางวัล'}
                 </a>
               </li>
               <li>
-                <a href="#achievements" className="transition-colors hover:text-accent">
-                  {lang === 'en' ? 'Achievements' : 'ผลงานและรางวัล'}
+                <a href="#work" className="transition-colors hover:text-accent">
+                  {lang === 'en' ? 'Work' : 'ผลงาน'}
                 </a>
               </li>
               <li>
@@ -502,13 +502,13 @@ export function App() {
         <nav aria-label="Primary mobile" className="border-t border-border/60 md:hidden">
           <ul className="flex gap-6 px-5 py-2 text-sm">
             <li>
-              <a href="#work" className="transition-colors hover:text-accent">
-                {lang === 'en' ? 'Work' : 'ผลงาน'}
+              <a href="#achievements" className="transition-colors hover:text-accent">
+                {lang === 'en' ? 'Awards' : 'รางวัล'}
               </a>
             </li>
             <li>
-              <a href="#achievements" className="transition-colors hover:text-accent">
-                {lang === 'en' ? 'Awards' : 'รางวัล'}
+              <a href="#work" className="transition-colors hover:text-accent">
+                {lang === 'en' ? 'Work' : 'ผลงาน'}
               </a>
             </li>
             <li>
@@ -575,13 +575,79 @@ export function App() {
               </p>
 
               <a
-                href="#work"
+                href="#achievements"
                 className="group inline-flex items-center gap-2 border-b border-foreground pb-1 text-sm font-medium transition-colors hover:border-accent hover:text-accent"
               >
-                <span>{lang === 'en' ? 'See selected work' : 'ดูผลงานที่คัดสรร'}</span>
+                <span>{lang === 'en' ? 'See achievements' : 'ดูผลงานและการคัดเลือก'}</span>
                 <ArrowDownRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
               </a>
             </div>
+          </div>
+        </section>
+
+        {/* ==========================================
+            ACHIEVEMENTS SECTION (#achievements)
+        ========================================== */}
+        <section
+          id="achievements"
+          aria-labelledby="achievements-title"
+          className="mx-auto max-w-screen-2xl scroll-mt-24 px-5 py-16 md:px-8 md:py-24"
+        >
+          <div className="flex items-baseline justify-between border-t border-foreground pt-4">
+            <h2 id="achievements-title" className="text-sm font-medium">
+              {lang === 'en' ? 'Achievements' : 'ผลงานและการคัดเลือก (Achievements)'}
+            </h2>
+            <span className="font-mono text-xs text-muted-foreground">
+              {achievements.length} {lang === 'en' ? 'entries' : 'รายการ'}
+            </span>
+          </div>
+
+          <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-6">
+            {featuredAchievement && (
+              <article className="flex flex-col justify-between gap-10 rounded-sm bg-[#191c21] p-6 text-[#fafaf9] sm:p-8">
+                <div className="flex items-start justify-between gap-4 font-mono text-xs text-[#a1a4aa]">
+                  <span className="inline-flex items-center gap-2 uppercase tracking-wide">
+                    <Award className="size-4 text-[#6b9bff]" />
+                    {lang === 'en' ? 'Main award' : 'ผลงานหลัก'}
+                  </span>
+                  <span className="shrink-0">{featuredAchievement.date[lang]}</span>
+                </div>
+
+                <div className="flex flex-col gap-4">
+                  <span className="w-fit rounded-sm bg-[#6b9bff] px-2 py-1 text-xs font-medium text-[#14161a]">
+                    {featuredAchievement.result[lang]}
+                  </span>
+                  <h3 className="text-2xl leading-tight font-medium text-balance sm:text-3xl">
+                    {featuredAchievement.title[lang]}
+                  </h3>
+                  <p className="text-sm text-[#a1a4aa]">{featuredAchievement.organizer[lang]}</p>
+                  <p className="max-w-xl leading-relaxed text-pretty">
+                    {featuredAchievement.detail[lang]}
+                  </p>
+                </div>
+              </article>
+            )}
+
+            <ol className="flex flex-col">
+              {otherAchievements.map((a) => (
+                <li
+                  key={a.id}
+                  className="grid grid-cols-[7.5rem_1fr] gap-4 border-t border-border py-5 sm:grid-cols-[9rem_1fr]"
+                >
+                  <span className="font-mono text-xs leading-6 text-muted-foreground">
+                    {a.date[lang]}
+                  </span>
+                  <span className="flex flex-col gap-1">
+                    <span className="text-xs font-medium text-accent">{a.result[lang]}</span>
+                    <span className="font-medium">{a.title[lang]}</span>
+                    <span className="text-sm text-muted-foreground">{a.organizer[lang]}</span>
+                    <span className="mt-1 leading-relaxed text-pretty text-muted-foreground">
+                      {a.detail[lang]}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 
@@ -650,72 +716,6 @@ export function App() {
               </li>
             ))}
           </ul>
-        </section>
-
-        {/* ==========================================
-            ACHIEVEMENTS SECTION (#achievements)
-        ========================================== */}
-        <section
-          id="achievements"
-          aria-labelledby="achievements-title"
-          className="mx-auto max-w-screen-2xl scroll-mt-24 px-5 py-16 md:px-8 md:py-24"
-        >
-          <div className="flex items-baseline justify-between border-t border-foreground pt-4">
-            <h2 id="achievements-title" className="text-sm font-medium">
-              {lang === 'en' ? 'Achievements' : 'ผลงานและการคัดเลือก (Achievements)'}
-            </h2>
-            <span className="font-mono text-xs text-muted-foreground">
-              {achievements.length} {lang === 'en' ? 'entries' : 'รายการ'}
-            </span>
-          </div>
-
-          <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-6">
-            {featuredAchievement && (
-              <article className="flex flex-col justify-between gap-10 rounded-sm bg-[#191c21] p-6 text-[#fafaf9] sm:p-8">
-                <div className="flex items-start justify-between gap-4 font-mono text-xs text-[#a1a4aa]">
-                  <span className="inline-flex items-center gap-2 uppercase tracking-wide">
-                    <Award className="size-4 text-[#6b9bff]" />
-                    {lang === 'en' ? 'Main award' : 'ผลงานหลัก'}
-                  </span>
-                  <span className="shrink-0">{featuredAchievement.date[lang]}</span>
-                </div>
-
-                <div className="flex flex-col gap-4">
-                  <span className="w-fit rounded-sm bg-[#6b9bff] px-2 py-1 text-xs font-medium text-[#14161a]">
-                    {featuredAchievement.result[lang]}
-                  </span>
-                  <h3 className="text-2xl leading-tight font-medium text-balance sm:text-3xl">
-                    {featuredAchievement.title[lang]}
-                  </h3>
-                  <p className="text-sm text-[#a1a4aa]">{featuredAchievement.organizer[lang]}</p>
-                  <p className="max-w-xl leading-relaxed text-pretty">
-                    {featuredAchievement.detail[lang]}
-                  </p>
-                </div>
-              </article>
-            )}
-
-            <ol className="flex flex-col">
-              {otherAchievements.map((a) => (
-                <li
-                  key={a.id}
-                  className="grid grid-cols-[7.5rem_1fr] gap-4 border-t border-border py-5 sm:grid-cols-[9rem_1fr]"
-                >
-                  <span className="font-mono text-xs leading-6 text-muted-foreground">
-                    {a.date[lang]}
-                  </span>
-                  <span className="flex flex-col gap-1">
-                    <span className="text-xs font-medium text-accent">{a.result[lang]}</span>
-                    <span className="font-medium">{a.title[lang]}</span>
-                    <span className="text-sm text-muted-foreground">{a.organizer[lang]}</span>
-                    <span className="mt-1 leading-relaxed text-pretty text-muted-foreground">
-                      {a.detail[lang]}
-                    </span>
-                  </span>
-                </li>
-              ))}
-            </ol>
-          </div>
         </section>
 
         {/* ==========================================

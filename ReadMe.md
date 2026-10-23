@@ -8,15 +8,15 @@
 
 > Features interactive **HELIX 923MHz LoRa Telemetry** & **FXCommand Risk Gate / Walk-Forward Arena** simulators, bilingual **EN / TH** support, and an interactive CLI terminal.
 
-## ⭐ Flagship Engineering Systems
-- **[HELIX (`helix` / `helix-command-center`)](https://github.com/marknatdev/helix)** — End-to-end Smart Helmet 923 MHz LoRa point-to-point telemetry (`Heltec WiFi LoRa 32 V2 ESP32 + SX1276`) → WiFi Gateway → Firebase Cloud Functions & Firestore → Multi-platform **Flutter Command Center**.
-- **[FXCommand (`fxcommand`)](https://github.com/marknatdev/fxcommand)** — Autonomous multi-symbol MetaTrader 5 trading engine with a 6-layer deterministic **Risk Gate**, magic-number **Kill Switch**, **Walk-Forward Champion/Challenger Shadow Arena**, and **MCP Server** for AI agents.
-
 ## 🏆 Achievements
 - **IoT Invention & Innovation Contest — Contestant** · National Science Week 2026, Suratthani Rajabhat University (18 Aug 2026)<br>
   *"A Location-Tracking Safety Helmet with AI Emergency Alerts"*, entered on behalf of Saparachinee Trang School
 - **Young Scientist Competition (YSC) 2027 — Proposal Round Qualifier** · NSTDA (Oct 2026)
 - **POSN Computer Olympiad Camp 1 — Selected** · POSN Foundation, Satree Phuket School (1–17 Oct 2026)
+
+## ⭐ Flagship Engineering Systems
+- **[HELIX (`helix` / `helix-command-center`)](https://github.com/marknatdev/helix)** — End-to-end Smart Helmet 923 MHz LoRa point-to-point telemetry (`Heltec WiFi LoRa 32 V2 ESP32 + SX1276`) → WiFi Gateway → Firebase Cloud Functions & Firestore → Multi-platform **Flutter Command Center**.
+- **[FXCommand (`fxcommand`)](https://github.com/marknatdev/fxcommand)** — Autonomous multi-symbol MetaTrader 5 trading engine with a 6-layer deterministic **Risk Gate**, magic-number **Kill Switch**, **Walk-Forward Champion/Challenger Shadow Arena**, and **MCP Server** for AI agents.
 
 ## 🌐 Socials:
 [![Portfolio](https://img.shields.io/badge/Portfolio-%2306B6D4.svg?logo=github&logoColor=white)](https://marknatdev.github.io/Marknatdev/) [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/mxrk._nat) [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:englishorspanishsek@gmail.com) 

@@ -42,22 +42,22 @@ export const CommandPalette: React.FC<Props> = ({
 
   const actions = [
     {
-      id: 'work',
-      title: lang === 'en' ? 'Jump to Selected Work (Flagships & Projects)' : 'ไปยังส่วนผลงานที่คัดสรร (Selected Work)',
-      category: 'Section',
-      icon: FolderGit2,
-      run: () => {
-        document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-        onClose();
-      },
-    },
-    {
       id: 'achievements',
       title: lang === 'en' ? 'Jump to Achievements (Awards & Selections)' : 'ไปยังส่วนผลงานและการคัดเลือก (Achievements)',
       category: 'Section',
       icon: Award,
       run: () => {
         document.getElementById('achievements')?.scrollIntoView({ behavior: 'smooth' });
+        onClose();
+      },
+    },
+    {
+      id: 'work',
+      title: lang === 'en' ? 'Jump to Selected Work (Flagships & Projects)' : 'ไปยังส่วนผลงานที่คัดสรร (Selected Work)',
+      category: 'Section',
+      icon: FolderGit2,
+      run: () => {
+        document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
         onClose();
       },
     },
