@@ -6,21 +6,17 @@ import {
   Globe,
   Mail,
   Github,
-  Briefcase,
   User,
   FolderGit2,
-  ExternalLink,
+  ArrowUpRight,
 } from 'lucide-react';
 import { Language, PROFILE_LINKS } from '../data/portfolioData';
-
-export type VCardPage = 'about' | 'resume' | 'portfolio' | 'lab' | 'contact';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   lang: Language;
   onToggleLang: (next: Language) => void;
-  onSelectPage: (page: VCardPage) => void;
 }
 
 export const CommandPalette: React.FC<Props> = ({
@@ -28,7 +24,6 @@ export const CommandPalette: React.FC<Props> = ({
   onClose,
   lang,
   onToggleLang,
-  onSelectPage,
 }) => {
   const [query, setQuery] = useState('');
 
@@ -46,32 +41,12 @@ export const CommandPalette: React.FC<Props> = ({
 
   const actions = [
     {
-      id: 'about',
-      title: lang === 'en' ? 'Open Tab: About Me & Flagships' : 'เปิดแท็บ: เกี่ยวกับฉันและผลงานหลัก',
-      category: 'vCard Pages',
-      icon: User,
-      run: () => {
-        onSelectPage('about');
-        onClose();
-      },
-    },
-    {
-      id: 'resume',
-      title: lang === 'en' ? 'Open Tab: Resume, Education (TCAS) & Skills' : 'เปิดแท็บ: ประวัติการศึกษา (TCAS) และทักษะ',
-      category: 'vCard Pages',
-      icon: Briefcase,
-      run: () => {
-        onSelectPage('resume');
-        onClose();
-      },
-    },
-    {
-      id: 'portfolio',
-      title: lang === 'en' ? 'Open Tab: Portfolio Projects Grid' : 'เปิดแท็บ: รวมโปรเจกต์ทั้งหมด',
-      category: 'vCard Pages',
+      id: 'work',
+      title: lang === 'en' ? 'Jump to Selected Work (Flagships & Projects)' : 'ไปยังส่วนผลงานที่คัดสรร (Selected Work)',
+      category: 'Section',
       icon: FolderGit2,
       run: () => {
-        onSelectPage('portfolio');
+        document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
         onClose();
       },
     },
@@ -79,22 +54,32 @@ export const CommandPalette: React.FC<Props> = ({
       id: 'lab',
       title:
         lang === 'en'
-          ? 'Open Tab: Interactive Lab (HELIX LoRa & FXCommand Simulators)'
-          : 'เปิดแท็บ: ห้องแล็บจำลองระบบ HELIX LoRa & FXCommand',
-      category: 'Interactive Simulators',
+          ? 'Jump to Interactive Engineering Lab (HELIX LoRa & FXCommand)'
+          : 'ไปยังห้องแล็บจำลองระบบ HELIX LoRa & FXCommand',
+      category: 'Simulators',
       icon: Cpu,
       run: () => {
-        onSelectPage('lab');
+        document.getElementById('lab')?.scrollIntoView({ behavior: 'smooth' });
+        onClose();
+      },
+    },
+    {
+      id: 'about',
+      title: lang === 'en' ? 'Jump to About, Capabilities & TCAS Timeline' : 'ไปยังส่วนเกี่ยวกับฉัน และประวัติการศึกษา (TCAS)',
+      category: 'Section',
+      icon: User,
+      run: () => {
+        document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
         onClose();
       },
     },
     {
       id: 'contact',
-      title: lang === 'en' ? 'Open Tab: Contact & Trang Map' : 'เปิดแท็บ: ติดต่อและแผนที่ จ.ตรัง',
-      category: 'vCard Pages',
+      title: lang === 'en' ? 'Jump to Contact & Socials' : 'ไปยังส่วนติดต่อ (Contact)',
+      category: 'Section',
       icon: Mail,
       run: () => {
-        onSelectPage('contact');
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         onClose();
       },
     },
@@ -104,7 +89,7 @@ export const CommandPalette: React.FC<Props> = ({
         lang === 'en'
           ? 'Switch Language to Thai (เปลี่ยนเป็นภาษาไทย)'
           : 'Switch Language to English (เปลี่ยนเป็นภาษาอังกฤษ)',
-      category: 'Preferences',
+      category: 'Language',
       icon: Globe,
       run: () => {
         onToggleLang(lang === 'en' ? 'th' : 'en');
@@ -130,10 +115,16 @@ export const CommandPalette: React.FC<Props> = ({
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/80 backdrop-blur-sm">
-      <div className="w-full max-w-xl rounded-[20px] border border-[#383838] bg-[#1e1e1f] shadow-2xl overflow-hidden">
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[#383838]">
-          <Search className="w-4 h-4 text-[#ffdb70]" />
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-foreground/40 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-xl rounded-sm border border-border bg-card shadow-2xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-border">
+          <Search className="size-4 text-accent" />
           <input
             type="text"
             autoFocus
@@ -141,40 +132,40 @@ export const CommandPalette: React.FC<Props> = ({
             onChange={(e) => setQuery(e.target.value)}
             placeholder={
               lang === 'en'
-                ? 'Search vCard tabs or commands (About, Resume, Portfolio, Lab, Thai)...'
-                : 'ค้นหาหน้าต่างๆ หรือคำสั่งลัด (About, Resume, Portfolio, Lab)...'
+                ? 'Jump to section or switch language (Work, Lab, About, Thai)...'
+                : 'ค้นหาส่วนต่างๆ หรือเปลี่ยนภาษา (Work, Lab, About)...'
             }
-            className="w-full bg-transparent text-sm text-[#fafafa] placeholder-[#d6d6d6]/50 focus:outline-none"
+            className="w-full bg-transparent text-sm text-foreground placeholder-muted-foreground focus:outline-none"
           />
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-[#d6d6d6]/70 hover:text-white hover:bg-[#2b2b2c]"
+            className="p-1 rounded-sm text-muted-foreground hover:text-foreground hover:bg-secondary"
           >
-            <X className="w-4 h-4" />
+            <X className="size-4" />
           </button>
         </div>
 
-        <div className="p-2 max-h-80 overflow-y-auto divide-y divide-[#383838]/40">
+        <div className="p-2 max-h-80 overflow-y-auto divide-y divide-border/50">
           {filtered.map((item) => {
             const Icon = item.icon;
             return (
               <button
                 key={item.id}
                 onClick={item.run}
-                className="w-full flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl hover:bg-[#2b2b2c] text-left transition group"
+                className="w-full flex items-center justify-between gap-3 px-3.5 py-3 rounded-sm hover:bg-secondary/70 text-left transition group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="vcard-icon-box !w-9 !h-9">
-                    <Icon className="w-4 h-4" />
-                  </div>
+                  <Icon className="size-4 text-muted-foreground group-hover:text-accent" />
                   <div>
-                    <div className="text-xs sm:text-sm font-medium text-[#fafafa] group-hover:text-[#ffdb70]">
+                    <div className="text-xs sm:text-sm font-medium text-foreground group-hover:text-accent">
                       {item.title}
                     </div>
-                    <div className="text-[11px] text-[#d6d6d6]/60">{item.category}</div>
+                    <div className="font-mono text-[11px] text-muted-foreground">
+                      {item.category}
+                    </div>
                   </div>
                 </div>
-                <ExternalLink className="w-3.5 h-3.5 text-[#d6d6d6]/50 group-hover:text-[#ffdb70]" />
+                <ArrowUpRight className="size-4 text-muted-foreground group-hover:text-accent" />
               </button>
             );
           })}

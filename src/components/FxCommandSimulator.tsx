@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  ShieldCheck,
   Trophy,
   OctagonAlert,
   Play,
@@ -182,37 +181,30 @@ export const FxCommandSimulator: React.FC<Props> = ({ lang }) => {
   };
 
   return (
-    <div className="vcard-content-card">
+    <div className="rounded-sm border border-border bg-card p-5 sm:p-7">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-4 border-b border-[#383838]">
-        <div className="flex items-center gap-3">
-          <div className="vcard-icon-box">
-            <ShieldCheck className="w-4 h-4" />
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-5 border-b border-border">
+        <div className="space-y-1">
+          <div className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
+            Flagship 02 · Interactive Quantitative Execution Engine
           </div>
-          <div>
-            <h4 className="text-sm font-semibold text-[#fafafa]">
-              {lang === 'en'
-                ? 'FXCommand — Pre-Trade Risk Gate & Walk-Forward Arena'
-                : 'ระบบจำลองเอ็นจิ้น FXCommand Risk Gate & Walk-Forward Arena'}
-            </h4>
-            <p className="text-xs text-[#d6d6d6]/70 mt-0.5">
-              {lang === 'en'
-                ? 'Simulate 6-layer Risk Gate validation, Challenger promotion (≥30 trades), and Kill Switch'
-                : 'ทดสอบด่านกรองความเสี่ยง 6 ชั้น การเลื่อนขั้นกลยุทธ์เมื่อครบ 30 เทรด และปุ่มฉุกเฉิน Kill Switch'}
-            </p>
-          </div>
+          <h3 className="text-lg sm:text-xl font-medium text-foreground">
+            {lang === 'en'
+              ? 'FXCommand — Pre-Trade Risk Gate & Walk-Forward Arena'
+              : 'ระบบจำลองเอ็นจิ้น FXCommand Risk Gate & Walk-Forward Arena'}
+          </h3>
         </div>
 
         {/* Symbol selector */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="inline-flex rounded-sm bg-secondary p-1">
           {(['XAUUSD', 'EURUSD', 'GBPUSD'] as const).map((sym) => (
             <button
               key={sym}
               onClick={() => setSelectedSymbol(sym)}
-              className={`px-3 py-1.5 rounded-xl font-mono text-xs font-semibold transition border ${
+              className={`px-3 py-1.5 rounded-sm font-mono text-xs font-medium transition ${
                 selectedSymbol === sym
-                  ? 'bg-[#2b2b2c] text-[#ffdb70] border-[#ffdb70]/50'
-                  : 'bg-[#121212] text-[#d6d6d6]/70 border-[#383838] hover:text-white'
+                  ? 'bg-card text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               {sym} · M15
@@ -222,24 +214,28 @@ export const FxCommandSimulator: React.FC<Props> = ({ lang }) => {
       </div>
 
       {/* Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mt-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 mt-6">
         <div className="flex flex-wrap items-center gap-2.5">
           <button
             onClick={handleEvaluateSignal}
             disabled={killSwitchTripped}
-            className="vcard-btn !py-2 !px-3.5 !text-xs disabled:opacity-40"
+            className="inline-flex items-center gap-2 rounded-sm bg-foreground hover:bg-accent disabled:opacity-40 text-card font-medium text-xs px-4 py-2.5 transition-colors"
           >
-            <Play className="w-3.5 h-3.5 fill-current" />
-            <span>{lang === 'en' ? 'Evaluate Trade Signal' : 'ส่งสัญญาณเทรดผ่าน Risk Gate'}</span>
+            <Play className="size-3.5 fill-current" />
+            <span>
+              {lang === 'en' ? 'Evaluate Trade Signal (Risk Gate)' : 'ส่งสัญญาณเทรดผ่าน Risk Gate'}
+            </span>
           </button>
 
           <button
             onClick={handleStepArena}
             disabled={killSwitchTripped}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#121212] hover:bg-[#2b2b2c] disabled:opacity-40 text-[#ffdb70] border border-[#383838] font-medium text-xs px-3.5 py-2 transition"
+            className="inline-flex items-center gap-2 rounded-sm border border-border bg-background hover:border-foreground disabled:opacity-40 text-foreground font-medium text-xs px-3.5 py-2.5 transition-colors"
           >
-            <Trophy className="w-3.5 h-3.5" />
-            <span>{lang === 'en' ? 'Advance Shadow Bar (+1 Trade)' : 'รันเทรดจำลองใน Arena (+1)'}</span>
+            <Trophy className="size-3.5 text-accent" />
+            <span>
+              {lang === 'en' ? 'Advance Shadow Bar (+1 Trade)' : 'รันเทรดจำลองใน Arena (+1)'}
+            </span>
           </button>
 
           {!killSwitchTripped ? (
@@ -250,81 +246,83 @@ export const FxCommandSimulator: React.FC<Props> = ({ lang }) => {
                   'KILL SWITCH ENGAGED · Closed all FXCommand Magic-Number positions; manual/external EA trades untouched.'
                 );
               }}
-              className="inline-flex items-center gap-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/40 font-medium text-xs px-3.5 py-2 transition"
+              className="inline-flex items-center gap-2 rounded-sm border border-red-600/40 bg-red-600/10 hover:bg-red-600/20 text-red-700 font-medium text-xs px-3.5 py-2.5 transition-colors"
             >
-              <OctagonAlert className="w-3.5 h-3.5" />
+              <OctagonAlert className="size-3.5" />
               <span>{lang === 'en' ? 'Trigger Kill Switch' : 'กดปุ่ม Kill Switch'}</span>
             </button>
           ) : (
             <button
               onClick={handleReset}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#ffdb70]/20 hover:bg-[#ffdb70]/30 text-[#ffdb70] border border-[#ffdb70]/40 font-medium text-xs px-3.5 py-2 transition"
+              className="inline-flex items-center gap-2 rounded-sm bg-accent text-card font-medium text-xs px-3.5 py-2.5 transition-colors"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
+              <RotateCcw className="size-3.5" />
               <span>{lang === 'en' ? 'Reset Engine' : 'รีเซ็ตระบบ'}</span>
             </button>
           )}
         </div>
 
-        <div className="font-mono text-xs text-[#d6d6d6]/70">
-          Journal Signals: <span className="text-[#ffdb70] font-semibold">{signalCount}</span>
+        <div className="font-mono text-xs text-muted-foreground">
+          Journal Signals: <span className="text-foreground font-semibold">{signalCount}</span>
         </div>
       </div>
 
       {/* Status Banner */}
       <div
-        className={`mt-4 rounded-xl px-4 py-2.5 border font-mono text-xs flex items-center justify-between gap-2 ${
+        className={`mt-4 rounded-sm px-4 py-2.5 border font-mono text-xs flex items-center justify-between gap-2 ${
           killSwitchTripped
-            ? 'bg-rose-950/40 border-rose-500/50 text-rose-200'
-            : 'bg-[#121212] border-[#383838] text-[#ffdb70]'
+            ? 'bg-red-50 border-red-600/40 text-red-800'
+            : 'bg-background border-border text-foreground'
         }`}
       >
         <span className="truncate">{lastOrderMessage}</span>
-        <span className="shrink-0 uppercase text-[10px] px-2 py-0.5 rounded bg-[#1e1e1f] border border-[#383838] text-[#d6d6d6]">
+        <span className="shrink-0 uppercase text-[10px] px-2 py-0.5 rounded-sm bg-secondary text-secondary-foreground">
           {killSwitchTripped ? 'HALTED' : '60× SIM / MT5'}
         </span>
       </div>
 
       {/* Two Columns: 6-Layer Risk Gate & Champion/Challenger Arena */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mt-5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
         <div className="lg:col-span-6 space-y-2.5">
-          <div className="text-xs font-mono uppercase tracking-wider text-[#d6d6d6]/70 mb-2 flex items-center justify-between">
+          <div className="text-xs font-mono uppercase tracking-wide text-muted-foreground mb-2 flex items-center justify-between">
             <span>{lang === 'en' ? 'Pre-Trade Risk Gate' : 'ด่านตรวจสอบความเสี่ยง 6 ชั้น'}</span>
-            <span className="text-[#ffdb70]">{killSwitchTripped ? '0/6 BLOCKED' : '6/6 PASSING'}</span>
+            <span className="text-accent font-medium">
+              {killSwitchTripped ? '0/6 BLOCKED' : '6/6 PASSING'}
+            </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {riskChecks.map((chk) => (
               <div
                 key={chk.name}
-                className={`rounded-xl p-3 border transition ${
+                className={`rounded-sm p-3.5 border transition ${
                   chk.passed
-                    ? 'bg-[#121212] border-[#383838]'
-                    : 'bg-rose-950/20 border-rose-500/30'
+                    ? 'bg-background border-border'
+                    : 'bg-red-50/60 border-red-600/30'
                 }`}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-semibold text-[#fafafa]">{chk.name}</span>
+                  <span className="text-xs font-medium text-foreground">{chk.name}</span>
                   {chk.passed ? (
-                    <CheckCircle2 className="w-4 h-4 text-[#ffdb70] shrink-0" />
+                    <CheckCircle2 className="size-4 text-accent shrink-0" />
                   ) : (
-                    <XCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                    <XCircle className="size-4 text-red-600 shrink-0" />
                   )}
                 </div>
-                <div className="font-mono text-[11px] text-[#d6d6d6]/70 mt-1">{chk.detail}</div>
+                <div className="font-mono text-[11px] text-muted-foreground mt-1">{chk.detail}</div>
               </div>
             ))}
           </div>
         </div>
 
         <div className="lg:col-span-6 space-y-2.5">
-          <div className="text-xs font-mono uppercase tracking-wider text-[#d6d6d6]/70 mb-2 flex items-center justify-between">
+          <div className="text-xs font-mono uppercase tracking-wide text-muted-foreground mb-2 flex items-center justify-between">
             <span className="flex items-center gap-1.5">
-              <TrendingUp className="w-3.5 h-3.5 text-[#ffdb70]" />
+              <TrendingUp className="size-3.5 text-accent" />
               {lang === 'en'
                 ? `Walk-Forward Arena (${selectedSymbol})`
                 : `สนามประลองกลยุทธ์ (${selectedSymbol})`}
             </span>
-            <span className="text-[#ffdb70]">Guardrail: ≥30 Trades</span>
+            <span className="text-accent font-medium">Guardrail: ≥30 Trades</span>
           </div>
 
           <div className="space-y-2.5">
@@ -333,41 +331,41 @@ export const FxCommandSimulator: React.FC<Props> = ({ lang }) => {
               return (
                 <div
                   key={bot.id}
-                  className={`rounded-xl p-3.5 border transition ${
+                  className={`rounded-sm p-3.5 border transition ${
                     isChamp
-                      ? 'bg-[#2b2b2c] border-[#ffdb70]/60'
-                      : 'bg-[#121212] border-[#383838]'
+                      ? 'bg-accent/5 border-accent'
+                      : 'bg-background border-border'
                   }`}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <span
-                        className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded ${
+                        className={`font-mono text-[10px] font-semibold px-2 py-0.5 rounded-sm ${
                           isChamp
-                            ? 'bg-[#ffdb70] text-[#121212]'
-                            : 'bg-[#1e1e1f] text-[#d6d6d6] border border-[#383838]'
+                            ? 'bg-accent text-card'
+                            : 'bg-secondary text-secondary-foreground'
                         }`}
                       >
                         {bot.role}
                       </span>
-                      <span className="text-xs font-semibold text-[#fafafa]">{bot.name}</span>
+                      <span className="text-xs font-medium text-foreground">{bot.name}</span>
                     </div>
 
                     {bot.status === 'PROMOTED' && (
-                      <span className="inline-flex items-center gap-1 font-mono text-[10px] text-[#ffdb70] bg-[#ffdb70]/15 border border-[#ffdb70]/40 px-2 py-0.5 rounded">
-                        <Sparkles className="w-3 h-3" /> PROMOTED!
+                      <span className="inline-flex items-center gap-1 font-mono text-[10px] text-accent bg-accent/10 px-2 py-0.5 rounded-sm font-semibold">
+                        <Sparkles className="size-3" /> PROMOTED!
                       </span>
                     )}
                   </div>
 
-                  <div className="flex flex-wrap items-center justify-between gap-2 mt-2 pt-2 border-t border-[#383838] font-mono text-[11px]">
-                    <span className="text-[#d6d6d6]/70">{bot.params}</span>
+                  <div className="flex flex-wrap items-center justify-between gap-2 mt-2 pt-2 border-t border-border font-mono text-[11px]">
+                    <span className="text-muted-foreground">{bot.params}</span>
                     <div className="flex items-center gap-3">
-                      <span className="text-[#ffdb70] font-semibold">
+                      <span className="text-accent font-semibold">
                         Trades: {bot.shadowTrades}/30
                       </span>
-                      <span className="text-[#fafafa]">OOS: {bot.oosScore}</span>
-                      <span className="text-[#d6d6d6]/70">DD: {bot.maxDd}%</span>
+                      <span className="text-foreground">OOS: {bot.oosScore}</span>
+                      <span className="text-muted-foreground">DD: {bot.maxDd}%</span>
                     </div>
                   </div>
                 </div>

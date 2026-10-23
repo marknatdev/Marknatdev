@@ -157,34 +157,34 @@ export const TerminalWidget: React.FC<Props> = ({ lang, onToggleLang }) => {
   const quickChips = ['help', 'whoami', 'helix', 'fxcommand', 'tcas', 'skills', 'repos', 'contact', 'clear'];
 
   return (
-    <div className="vcard-content-card !p-0 overflow-hidden">
+    <div className="rounded-sm border border-border bg-card overflow-hidden">
       {/* Window Bar */}
-      <div className="flex items-center justify-between px-4 py-3 bg-[#121212] border-b border-[#383838]">
+      <div className="flex items-center justify-between px-4 py-3 bg-secondary/70 border-b border-border">
         <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-full bg-rose-500/80" />
-          <span className="w-3 h-3 rounded-full bg-[#ffdb70]/80" />
-          <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-          <span className="ml-2 font-mono text-xs text-[#d6d6d6] flex items-center gap-1.5">
-            <TerminalIcon className="w-3.5 h-3.5 text-[#ffdb70]" />
+          <span className="size-2.5 rounded-full bg-foreground/25" />
+          <span className="size-2.5 rounded-full bg-foreground/25" />
+          <span className="size-2.5 rounded-full bg-accent" />
+          <span className="ml-2 font-mono text-xs text-foreground flex items-center gap-1.5">
+            <TerminalIcon className="size-3.5 text-accent" />
             mark@saparachinee-trang:~/portfolio
           </span>
         </div>
-        <span className="font-mono text-[11px] text-[#d6d6d6]/60 hidden sm:inline">
+        <span className="font-mono text-[11px] text-muted-foreground hidden sm:inline">
           interactive-shell · zsh
         </span>
       </div>
 
       {/* Quick Chips */}
-      <div className="px-4 py-2.5 bg-[#1e1e1f] border-b border-[#383838] flex flex-wrap items-center gap-1.5">
-        <span className="text-[11px] font-mono text-[#d6d6d6]/70 mr-1 flex items-center gap-1">
-          <Sparkles className="w-3 h-3 text-[#ffdb70]" />
+      <div className="px-4 py-2.5 bg-background border-b border-border flex flex-wrap items-center gap-1.5">
+        <span className="text-[11px] font-mono text-muted-foreground mr-1 flex items-center gap-1">
+          <Sparkles className="size-3 text-accent" />
           {lang === 'en' ? 'Quick Run:' : 'คลิกรันคำสั่ง:'}
         </span>
         {quickChips.map((chip) => (
           <button
             key={chip}
             onClick={() => runCommand(chip)}
-            className="px-2.5 py-1 rounded-lg font-mono text-xs bg-[#121212] hover:bg-[#2b2b2c] text-[#ffdb70] border border-[#383838] hover:border-[#ffdb70]/40 transition"
+            className="px-2.5 py-1 rounded-sm font-mono text-xs bg-secondary hover:bg-accent hover:text-card text-secondary-foreground transition-colors"
           >
             {chip}
           </button>
@@ -194,17 +194,17 @@ export const TerminalWidget: React.FC<Props> = ({ lang, onToggleLang }) => {
       {/* Terminal Output */}
       <div
         ref={containerRef}
-        className="p-4 sm:p-5 font-mono text-xs sm:text-sm space-y-4 max-h-72 overflow-y-auto bg-[#121212]/70"
+        className="p-4 sm:p-5 font-mono text-xs sm:text-sm space-y-4 max-h-72 overflow-y-auto bg-card"
       >
         {history.map((item) => (
           <div key={item.id} className="space-y-1.5">
             {item.cmd && (
-              <div className="flex items-center gap-2 text-[#fafafa]">
-                <span className="text-[#ffdb70] font-semibold">mark@portfolio:~$</span>
-                <span className="font-bold text-white">{item.cmd}</span>
+              <div className="flex items-center gap-2 text-foreground">
+                <span className="text-accent font-semibold">mark@portfolio:~$</span>
+                <span className="font-semibold">{item.cmd}</span>
               </div>
             )}
-            <div className="space-y-1 pl-3 border-l-2 border-[#383838] text-[#d6d6d6]">
+            <div className="space-y-1 pl-3 border-l-2 border-border text-muted-foreground">
               {item.output.map((line, i) => (
                 <div key={i} className="leading-relaxed whitespace-pre-wrap">
                   {line}
@@ -221,9 +221,9 @@ export const TerminalWidget: React.FC<Props> = ({ lang, onToggleLang }) => {
           e.preventDefault();
           runCommand(input);
         }}
-        className="flex items-center gap-2 px-4 py-3 bg-[#121212] border-t border-[#383838] font-mono text-xs sm:text-sm"
+        className="flex items-center gap-2 px-4 py-3 bg-background border-t border-border font-mono text-xs sm:text-sm"
       >
-        <span className="text-[#ffdb70] font-semibold shrink-0">mark@portfolio:~$</span>
+        <span className="text-accent font-semibold shrink-0">mark@portfolio:~$</span>
         <input
           type="text"
           value={input}
@@ -233,14 +233,14 @@ export const TerminalWidget: React.FC<Props> = ({ lang, onToggleLang }) => {
               ? 'Type a command (help, helix, fxcommand, tcas, skills, contact)...'
               : 'พิมพ์คำสั่ง เช่น help, helix, fxcommand, tcas, skills, contact...'
           }
-          className="w-full bg-transparent text-[#fafafa] placeholder-[#d6d6d6]/40 focus:outline-none"
+          className="w-full bg-transparent text-foreground placeholder-muted-foreground/60 focus:outline-none"
         />
         <button
           type="submit"
-          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#2b2b2c] text-[#ffdb70] border border-[#383838] text-xs hover:border-[#ffdb70]/50 transition shrink-0"
+          className="inline-flex items-center gap-1 px-3 py-1 rounded-sm bg-foreground text-card hover:bg-accent text-xs transition-colors shrink-0"
         >
           <span>Run</span>
-          <CornerDownLeft className="w-3 h-3" />
+          <CornerDownLeft className="size-3" />
         </button>
       </form>
     </div>
