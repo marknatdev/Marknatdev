@@ -9,6 +9,7 @@ import {
   User,
   FolderGit2,
   ArrowUpRight,
+  Award,
 } from 'lucide-react';
 import { Language, PROFILE_LINKS } from '../data/portfolioData';
 
@@ -47,6 +48,16 @@ export const CommandPalette: React.FC<Props> = ({
       icon: FolderGit2,
       run: () => {
         document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
+        onClose();
+      },
+    },
+    {
+      id: 'achievements',
+      title: lang === 'en' ? 'Jump to Achievements (Awards & Selections)' : 'ไปยังส่วนผลงานและการคัดเลือก (Achievements)',
+      category: 'Section',
+      icon: Award,
+      run: () => {
+        document.getElementById('achievements')?.scrollIntoView({ behavior: 'smooth' });
         onClose();
       },
     },

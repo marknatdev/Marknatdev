@@ -54,7 +54,7 @@ export const TerminalWidget: React.FC<Props> = ({ lang, onToggleLang }) => {
           '  whoami      → Student & developer profile summary',
           '  helix       → Inspect Flagship #1: HELIX 923MHz LoRa Smart Helmet & Command Center',
           '  fxcommand   → Inspect Flagship #2: FXCommand Autonomous MT5 Engine & Walk-Forward Arena',
-          '  tcas        → Academic & competition portfolio (Saparachinee Trang School M.5)',
+          '  tcas        → Achievements & academic portfolio (Saparachinee Trang School M.5)',
           '  skills      → Full hardware, systems, mobile & AI tech stack',
           '  repos       → List public GitHub repositories (@marknatdev)',
           '  contact     → Email, GitHub, Instagram & Ko-fi links',
@@ -100,6 +100,10 @@ export const TerminalWidget: React.FC<Props> = ({ lang, onToggleLang }) => {
       case 'tcas':
         out = [
           '[ACADEMIC & COMPETITION PORTFOLIO — SAPARACHINEE TRANG SCHOOL (GRADE 11 / M.5)]',
+          '  ★ IoT Innovation Contest: Contestant, National Science Week 2026 (Suratthani Rajabhat Univ., 18 Aug 2026)',
+          '                           AI Emergency-Alert Location-Tracking Safety Helmet',
+          '  ★ YSC 2027 (NSTDA):      Proposal Round Qualifier (Oct 2026)',
+          '  ★ POSN Computer Camp 1:  Selected, Satree Phuket School (1–17 Oct 2026) · Math & C/C++',
           '  • MMC 2026 (MMC 2569): Projective Homography & Shoelace Formula Land Area Modeling in Python (MMC011)',
           '  • RUTS Stage Demo:     10 Hz ESP32 USB-Serial Cascade Damper Control + CIE Lab CV Chilli Drying Detection',
           '  • MindfulBook AI:      Anti-Cyberbullying AI Social Media Testbed tailored for Thai users',

@@ -10,6 +10,7 @@ import {
   Sparkles,
   MapPin,
   Compass,
+  Award,
 } from 'lucide-react';
 import { Language, PROFILE_LINKS } from './data/portfolioData';
 import { HelixSimulator } from './components/HelixSimulator';
@@ -26,6 +27,16 @@ interface WorkItem {
   href: string;
   external?: boolean;
   previewType: 'helix' | 'fxcommand' | 'ruts' | 'mindfulbook' | 'studyforge' | 'rotduam';
+}
+
+interface Achievement {
+  id: string;
+  title: { en: string; th: string };
+  result: { en: string; th: string };
+  organizer: { en: string; th: string };
+  date: { en: string; th: string };
+  detail: { en: string; th: string };
+  featured?: boolean;
 }
 
 export function App() {
@@ -152,6 +163,61 @@ export function App() {
       previewType: 'rotduam',
     },
   ];
+
+  const achievements: Achievement[] = [
+    {
+      id: 'iot-nsw-2026',
+      featured: true,
+      title: {
+        en: 'IoT Invention & Innovation Contest',
+        th: 'การประกวดสิ่งประดิษฐ์และนวัตกรรมด้าน IoT',
+      },
+      result: { en: 'Contestant', th: 'ผู้เข้าแข่งขัน' },
+      organizer: {
+        en: 'National Science Week 2026 · Suratthani Rajabhat University',
+        th: 'สัปดาห์วิทยาศาสตร์แห่งชาติ 2569 · มหาวิทยาลัยราชภัฏสุราษฎร์ธานี',
+      },
+      date: { en: '18 Aug 2026', th: '18 ส.ค. 2569' },
+      detail: {
+        en: 'Entered "A Location-Tracking Safety Helmet with AI Emergency Alerts for Improved Safety" on behalf of Saparachinee Trang School.',
+        th: 'ผลงาน "หมวกนิรภัยติดตามตำแหน่งพร้อมระบบแจ้งเตือนเหตุฉุกเฉินด้วย AI เพื่อยกระดับความปลอดภัย" ส่งในนามโรงเรียนสภาราชินี จังหวัดตรัง',
+      },
+    },
+    {
+      id: 'ysc-2027',
+      title: {
+        en: 'Young Scientist Competition (YSC) 2027',
+        th: 'Young Scientist Competition (YSC) 2027',
+      },
+      result: { en: 'Proposal Round Qualifier', th: 'ผ่านรอบข้อเสนอโครงงาน' },
+      organizer: { en: 'NSTDA', th: 'สวทช. (NSTDA)' },
+      date: { en: 'Oct 2026', th: 'ต.ค. 2569' },
+      detail: {
+        en: 'Project proposal accepted; moving on to develop the project in the next round.',
+        th: 'ข้อเสนอโครงงานผ่านการพิจารณา ได้ไปพัฒนาโครงงานต่อในรอบถัดไป',
+      },
+    },
+    {
+      id: 'posn-camp1',
+      title: {
+        en: 'POSN Computer Olympiad Camp 1',
+        th: 'ค่าย 1 สอวน. คอมพิวเตอร์',
+      },
+      result: { en: 'Selected', th: 'ผ่านการคัดเลือก' },
+      organizer: {
+        en: 'POSN Foundation · Satree Phuket School',
+        th: 'มูลนิธิ สอวน. · โรงเรียนสตรีภูเก็ต',
+      },
+      date: { en: '1–17 Oct 2026', th: '1–17 ต.ค. 2569' },
+      detail: {
+        en: '17 days of training in mathematics and C/C++ programming.',
+        th: 'อบรมคณิตศาสตร์และการเขียนโปรแกรม C/C++ เป็นเวลา 17 วัน',
+      },
+    },
+  ];
+
+  const featuredAchievement = achievements.find((a) => a.featured);
+  const otherAchievements = achievements.filter((a) => !a.featured);
 
   const renderProjectPreview = (item: WorkItem) => {
     switch (item.previewType) {
@@ -391,6 +457,11 @@ export function App() {
                 </a>
               </li>
               <li>
+                <a href="#achievements" className="transition-colors hover:text-accent">
+                  {lang === 'en' ? 'Achievements' : 'ผลงานและรางวัล'}
+                </a>
+              </li>
+              <li>
                 <a href="#lab" className="transition-colors hover:text-accent">
                   {lang === 'en' ? 'Interactive Lab' : 'จำลองระบบ'}
                 </a>
@@ -433,6 +504,11 @@ export function App() {
             <li>
               <a href="#work" className="transition-colors hover:text-accent">
                 {lang === 'en' ? 'Work' : 'ผลงาน'}
+              </a>
+            </li>
+            <li>
+              <a href="#achievements" className="transition-colors hover:text-accent">
+                {lang === 'en' ? 'Awards' : 'รางวัล'}
               </a>
             </li>
             <li>
@@ -574,6 +650,72 @@ export function App() {
               </li>
             ))}
           </ul>
+        </section>
+
+        {/* ==========================================
+            ACHIEVEMENTS SECTION (#achievements)
+        ========================================== */}
+        <section
+          id="achievements"
+          aria-labelledby="achievements-title"
+          className="mx-auto max-w-screen-2xl scroll-mt-24 px-5 py-16 md:px-8 md:py-24"
+        >
+          <div className="flex items-baseline justify-between border-t border-foreground pt-4">
+            <h2 id="achievements-title" className="text-sm font-medium">
+              {lang === 'en' ? 'Achievements' : 'ผลงานและการคัดเลือก (Achievements)'}
+            </h2>
+            <span className="font-mono text-xs text-muted-foreground">
+              {achievements.length} {lang === 'en' ? 'entries' : 'รายการ'}
+            </span>
+          </div>
+
+          <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-6">
+            {featuredAchievement && (
+              <article className="flex flex-col justify-between gap-10 rounded-sm bg-[#191c21] p-6 text-[#fafaf9] sm:p-8">
+                <div className="flex items-start justify-between gap-4 font-mono text-xs text-[#a1a4aa]">
+                  <span className="inline-flex items-center gap-2 uppercase tracking-wide">
+                    <Award className="size-4 text-[#6b9bff]" />
+                    {lang === 'en' ? 'Main award' : 'ผลงานหลัก'}
+                  </span>
+                  <span className="shrink-0">{featuredAchievement.date[lang]}</span>
+                </div>
+
+                <div className="flex flex-col gap-4">
+                  <span className="w-fit rounded-sm bg-[#6b9bff] px-2 py-1 text-xs font-medium text-[#14161a]">
+                    {featuredAchievement.result[lang]}
+                  </span>
+                  <h3 className="text-2xl leading-tight font-medium text-balance sm:text-3xl">
+                    {featuredAchievement.title[lang]}
+                  </h3>
+                  <p className="text-sm text-[#a1a4aa]">{featuredAchievement.organizer[lang]}</p>
+                  <p className="max-w-xl leading-relaxed text-pretty">
+                    {featuredAchievement.detail[lang]}
+                  </p>
+                </div>
+              </article>
+            )}
+
+            <ol className="flex flex-col">
+              {otherAchievements.map((a) => (
+                <li
+                  key={a.id}
+                  className="grid grid-cols-[7.5rem_1fr] gap-4 border-t border-border py-5 sm:grid-cols-[9rem_1fr]"
+                >
+                  <span className="font-mono text-xs leading-6 text-muted-foreground">
+                    {a.date[lang]}
+                  </span>
+                  <span className="flex flex-col gap-1">
+                    <span className="text-xs font-medium text-accent">{a.result[lang]}</span>
+                    <span className="font-medium">{a.title[lang]}</span>
+                    <span className="text-sm text-muted-foreground">{a.organizer[lang]}</span>
+                    <span className="mt-1 leading-relaxed text-pretty text-muted-foreground">
+                      {a.detail[lang]}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
         </section>
 
         {/* ==========================================
